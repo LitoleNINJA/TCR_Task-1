@@ -12,14 +12,14 @@ def empty(a):
 
 cv2.namedWindow('Parameters')
 cv2.resizeWindow('Parameters',640,400)
-cv2.createTrackbar('HUE MIN','Parameters',0,179,empty)
-cv2.createTrackbar('HUE MAX','Parameters',179,179,empty)
-cv2.createTrackbar('SAT MIN','Parameters',0,255,empty)
+cv2.createTrackbar('HUE MIN','Parameters',26,179,empty)
+cv2.createTrackbar('HUE MAX','Parameters',46,179,empty)
+cv2.createTrackbar('SAT MIN','Parameters',65,255,empty)
 cv2.createTrackbar('SAT MAX','Parameters',255,255,empty)
-cv2.createTrackbar('VAL MIN','Parameters',0,255,empty)
+cv2.createTrackbar('VAL MIN','Parameters',90,255,empty)
 cv2.createTrackbar('VAL MAX','Parameters',255,255,empty)
 
-cv2.createTrackbar('threshold1','Parameters',150,255,empty)
+cv2.createTrackbar('threshold1','Parameters',30,255,empty)
 cv2.createTrackbar('threshold2','Parameters',255,255,empty)
 
 '''def stackImages(scale,imgArray):
@@ -54,6 +54,17 @@ cv2.createTrackbar('threshold2','Parameters',255,255,empty)
         hor=np.hstack(imgArray)
         ver=hor
     return ver'''
+def findcircle(img,imgContour):
+    circles=cv2.HoughCircles(img,cv2.HOUGH_GRADIENT,1.2,10000,param1=threshold2,param2=threshold1)
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype("int")
+        
+        # loop over the (x, y) coordinates and radius of the circles
+        for (x, y, r) in circles:
+            # draw the circle in the output image, then draw a rectangle
+            # corresponding to the center of the circle
+            cv2.circle(imgContour, (int(x), int(y)), int(r),
+                                (0, 255, 255), 2)
 
 def getContours(img,imgContour):
     contours,hierarchy=cv2.findContours(img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
@@ -65,7 +76,6 @@ def getContours(img,imgContour):
             circles=cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 100, 50, 10)
             if circles is not None:
                 #circles = np.round(circles[0, :]).astype("int")
-
 
                 #cv2.drawContours(imgContour,cnt,-1,(255,0,255),3)
                     
@@ -83,33 +93,35 @@ while True:
     success,img=cap.read()
     imgContour=img.copy()
     imgBlur=cv2.GaussianBlur(img,(7,7),1)
-    #imgGray=cv2.cvtColor(imgBlur,cv2.COLOR_BGR2GRAY)
+    imgGray=cv2.cvtColor(imgBlur,cv2.COLOR_BGR2GRAY)
     
-    '''h_min=cv2.getTrackbarPos('HUE MIN','Parameters')
+    h_min=cv2.getTrackbarPos('HUE MIN','Parameters')
     h_max=cv2.getTrackbarPos('HUE MAX','Parameters')
     sat_min=cv2.getTrackbarPos('SAT MIN','Parameters')
     sat_max=cv2.getTrackbarPos('SAT MAX','Parameters')
     val_min=cv2.getTrackbarPos('VAL MIN','Parameters')
-    val_max=cv2.getTrackbarPos('VAL MAX','Parameters')'''
-    '''threshold1=cv2.getTrackbarPos('threshold1','Parameters')
-    threshold2=cv2.getTrackbarPos('threshold2','Parameters')'''
-    '''imgCanny=cv2.Canny(imgGray,threshold1,threshold2)
+    val_max=cv2.getTrackbarPos('VAL MAX','Parameters')
+    threshold1=cv2.getTrackbarPos('threshold1','Parameters')
+    threshold2=cv2.getTrackbarPos('threshold2','Parameters')
+    imgCanny=cv2.Canny(imgGray,threshold1,threshold2)
     kernel=np.ones((5,5))
-    imgDil=cv2.dilate(imgCanny,kernel,iterations=1)'''
-    #lower=np.array([h_min,sat_min,val_min])
-    #upper=np.array([h_max,sat_max,val_max])
+    imgDil=cv2.dilate(imgCanny,kernel,iterations=1)
+    imgDil=cv2.cvtColor(imgDil,cv2.COLOR_GRAY2BGR)
+    lower=np.array([h_min,sat_min,val_min])
+    upper=np.array([h_max,sat_max,val_max])
     hsv=cv2.cvtColor(imgBlur,cv2.COLOR_BGR2HSV)
-    mask=cv2.inRange(hsv,greenLower,greenUpper)
-    #result=cv2.bitwise_and(img,img,mask=mask)
+    mask=cv2.inRange(hsv,lower,upper)
+    result=cv2.bitwise_and(img,img,mask=mask)
 
     mask = cv2.erode(mask, None, iterations=2)
-    mask = cv2.dilate(mask, None, iterations=1)
-    getContours(mask,imgContour)
-    
+    mask = cv2.dilate(mask, None, iterations=2)
+    findcircle(mask,imgContour)
+    #getContours(mask,imgContour)
+    imgCanny=cv2.cvtColor(imgCanny,cv2.COLOR_GRAY2BGR)
     #imgStack=stackImages(0.8,([img,hsv],[mask,imgContour]))
     
     mask=cv2.cvtColor(mask,cv2.COLOR_GRAY2BGR)
-    hStack=np.hstack([mask,imgContour])
+    hStack=np.hstack([imgCanny,imgContour])
     cv2.imshow("Result",hStack)
     if cv2.waitKey(1) & 0xFF==ord('q'):
         break
