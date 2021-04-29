@@ -26,13 +26,13 @@ while True :
             ((x,y), radius) = cv2.minEnclosingCircle(c)
             x = int(x)
             y = int(y)
-            if len(approx) >=8 and radius > 10 :
+            if len(approx) >=8 and radius > 50 :
                 cv2.circle(frame, (int(x), int(y)), int(radius), (0, 0, 255), 2)
-                if x < height//2 and y < width//2:
+                if x < width//2 and y < height//2:
                     corner = "Top Left"
-                elif x < height//2 and y > width//2 :
+                elif x < width//2 and y > height//2 :
                     corner = "Bottom Left"
-                elif x > height//2 and y < width//2 :
+                elif x > width//2 and y < height//2 :
                     corner = "Top Right"
                 else :
                     corner = "Bottom Right"
