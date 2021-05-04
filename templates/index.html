@@ -10,12 +10,9 @@
     <title>Stream</title>
 </head>
 <body class="bg-dark text-white">
-    <div class="d-flex">
-        <div class="container">
-            <h1>Web-Cam Stream</h1>
-            <img src = "{{ url_for('video_feed') }}">
-            <a class="btn btn-primary ms-4" href="{{ url_for('data') }}" target="_blank">Check</a>
-        </div>
+    <div class="container-fluid">
+        <h1>Web-Cam Stream</h1>
+        <img src = "{{ url_for('video_feed') }}" style="width: 100%; height: auto;">
     </div>
 </body>
 </html>
