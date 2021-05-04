@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import Response
 from flask import render_template
-from vision import camera
+from ball_tracking import camera
 
 app = Flask(__name__)
 
