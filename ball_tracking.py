@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+
 class camera(object) :
     def __init__(self) :
         self.img = cv2.VideoCapture(0)
@@ -7,7 +8,7 @@ class camera(object) :
     def __del__(self) :
         self.img.release()
         cv2.destroyAllWindows()
-        
+
     def gen_frame(self) :
         height = self.img.get(cv2.CAP_PROP_FRAME_HEIGHT)
         width = self.img.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -20,8 +21,8 @@ class camera(object) :
         cv2.erode(mask, None, iterations=2)
         cv2.dilate(mask, None, iterations=2)
         cnt, hier = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        corner = None
-        percent_vol = None
+        corner = "None"
+        percent_vol = "None"
 
         if len(cnt) > 0 :
             for c in cnt :
@@ -43,7 +44,17 @@ class camera(object) :
                         corner = "Top Right"
                     else :
                         corner = "Bottom Right"
-                    cv2.putText(frame, corner + " : " + percent_vol + " %", (x-150, y-radius-15), cv2.FONT_HERSHEY_COMPLEX, 1, (0,0,255), 2) 
 
-        flag, jpeg = cv2.imencode(".jpg", frame)
-        return jpeg.tobytes(), corner, percent_vol
+        height = int(height)
+        width = int(width)
+        blank_image = np.zeros((height, 400, 3), np.uint8)
+        blank_image[:] = (41,36,33)
+        cv2.putText(blank_image, "Region = "+corner, (25, 150), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 255, 255), 1)
+        
+        if percent_vol == "0.0" :
+            percent_vol = "None"
+        cv2.putText(blank_image, "Area = "+percent_vol+" %", (25, 250), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 1)
+        join = cv2.hconcat([frame, blank_image])
+        
+        _, jpeg = cv2.imencode(".jpg", join)
+        return jpeg.tobytes()
