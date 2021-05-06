@@ -10,9 +10,41 @@
     <title>Stream</title>
 </head>
 <body class="bg-dark text-white">
-    <div class="container-fluid">
-        <h1>Web-Cam Stream</h1>
-        <img src = "{{ url_for('video_feed') }}" style="width: 100%; height: auto;">
+    <div class="d-flex">
+        <div class="col col-8">
+            <h1>Web-Cam Stream</h1>
+            <img src = "{{ url_for('video_feed') }}" style="width: 100%; height: auto;">
+        </div>
+        <div class="col col-4 px-4 fs-3" style="margin-top: 200px;">
+            <table class="table text-white table-bordered table-sm">
+                <tbody>
+                <tr>
+                    <th scope="row">Ball</th>
+                    <td id="ball" class="text-primary"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Region</th>
+                    <td id="corner" class="text-success"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Area</th>
+                    <td id="area" class="text-danger"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.getJSON('/send_data' ,
+            function(data) {
+                $("#ball").text(data.ball).show();
+                $("#corner").text(data.corner).show();
+                $("#area").text(data.area).show();
+            });
+            setTimeout(arguments.callee, 100);
+        });
+    </script>
 </body>
 </html>
