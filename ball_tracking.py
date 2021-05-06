@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+
 class camera(object) :
     def __init__(self) :
         self.img = cv2.VideoCapture(0)
@@ -43,18 +44,7 @@ class camera(object) :
                     elif x > width//2 and y < height//2 :
                         corner = "Top Right"
                     else :
-                        corner = "Bottom Right"
-
-        height = int(height)
-        width = int(width)
-        blank_image = np.zeros((height, 400, 3), np.uint8)
-        blank_image[:] = (41,36,33)
-        cv2.putText(blank_image, "Region = "+corner, (25, 150), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 255, 255), 1)
+                        corner = "Bottom Right" 
         
-        if percent_vol == "0.0" :
-            percent_vol = "None"
-        cv2.putText(blank_image, "Area = "+percent_vol+" %", (25, 250), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 1)
-        join = cv2.hconcat([frame, blank_image])
-        
-        _, jpeg = cv2.imencode(".jpg", join)
-        return jpeg.tobytes()
+        _, jpeg = cv2.imencode(".jpg", frame)
+        return jpeg.tobytes(), corner, percent_vol
