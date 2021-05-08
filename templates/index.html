@@ -8,16 +8,55 @@
         rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" 
         crossorigin="anonymous">
     <title>Stream</title>
+    <style>
+        .header{height:30vh;}
+        .navbar-style{box-shadow: 0 5px 20px; background-color: black;}
+        .logo{height:100px; padding:5px}
+        .icon-bar{background: rgb(255, 140, 0);}
+	.big-text{font-family:'Corbel';color:lightblue;text-shadow: 2px 2px 2px #CCCCCC; font-size: xx-large; text-align: center;}
+	.table-text{font-family: 'Courier New';}
+        .footer{height:60px; margin-top:50px;margin-bottom:10px; text-align: center; font-family: 'Corbel'; font-size: 20px; color: grey}
+	.hr{margin-top:150px;}
+	.heading{font-family:'Corbel'; color:lightgreen; text-shadow: 2px 2px 2px #CCCCCC;}
+	.para{font-family:'Corbel'; color:grey; font-size: 25px; margin-left:100px;margin-right:100px;}
+	
+    </style>
 </head>
 <body class="bg-dark text-white">
+    <header class="header">
+        <nav class="navbar navbar-style">
+            <div class="container">
+                <div class="navbar-header">
+                 
+                    <a href="">
+                        <img class="logo" src="{{url_for('static',filename='tcr.jpg')}}" width="400">
+                    </a>
+                </div>
+                
+                
+
+            </div>
+        </nav>
+    </header>
+    <h1 class="heading"> <center>Task-1 : Ball Tracking </center></h1>
+    <br><br>
+    <p class="para">
+    This system takes visual input from the environment, processes it, presents it to the user, and gives a tangible output. It detects the presence of a green ball, calculates the percentage of area covered by the ball in the feed, and also detects the region of the feed where the ball is present.
+    </p>
+    <br><br>
     <div class="d-flex">
         <div class="col col-8">
-            <h1>Web-Cam Stream</h1>
-            <img src = "{{ url_for('video_feed') }}" style="width: 100%; height: auto;">
+            
+            <h1 class="big-text">Web-Cam Stream</h1>
+		<p> </p>
+		
+		
+            <img src = "{{ url_for('video_feed') }}" style="width: 80%; height: auto; margin-left:100px;margin-top:40px;margin-right:10px margin-bottom:100px">
+            
         </div>
         <div class="col col-4 px-4 fs-3" style="margin-top: 200px;">
-            <table class="table text-white table-bordered table-sm">
-                <tbody>
+            <table class="table text-white table-bordered table-dark table-striped table-sm">
+                <tbody class="table-text">
                 <tr>
                     <th scope="row">Ball</th>
                     <td id="ball" class="text-primary"></td>
@@ -46,5 +85,16 @@
             setTimeout(arguments.callee, 500);
         });
     </script>
+<hr class="hr">
+<footer class="footer">
+Made by Team-5
+<br><br>
+-Ritwik Singh
+<br>
+-Manvik Sreedath
+<br>
+-Manasvi Maheshwari
+
+</footer>
 </body>
 </html>
