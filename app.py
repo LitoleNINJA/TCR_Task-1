@@ -34,4 +34,4 @@ def send_data() :
     return jsonify(ball=ball, corner=corner, area=percent_vol)
 
 if __name__ == '__main__' :
-    app.run(debug=True)
+    app.run()

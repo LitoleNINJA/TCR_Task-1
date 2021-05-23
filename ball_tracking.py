@@ -1,6 +1,4 @@
 import cv2
-import numpy as np
-
 
 class camera(object) :
     def __init__(self) :
@@ -35,7 +33,7 @@ class camera(object) :
                 percent_vol = ((3.14159*radius*radius) * 100 )/(height*width)
                 percent_vol = round(percent_vol, 2)
                 percent_vol = str(percent_vol)
-                if len(approx) >=8 and radius > 50 :
+                if len(approx) >= 8 and radius > 50 :
                     cv2.circle(frame, (x, y), radius, (0, 0, 255), 2)
                     if x < width//2 and y < height//2:
                         corner = "Top Left"

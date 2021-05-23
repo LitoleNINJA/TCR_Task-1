@@ -1,0 +1,53 @@
+header{
+    height:30vh;
+}
+#img {
+    width: 80%; 
+    height: auto; 
+    margin-left:100px;
+    margin-top:40px;
+    margin-right:10px;
+}
+.navbar-style{
+    box-shadow: 0 5px 20px; 
+    background-color: black;
+}
+.logo{
+    height:100px; 
+    width:"400px";
+    padding:5px;
+}
+.icon-bar{
+    background: rgb(255, 140, 0);
+}
+.big-text{
+    font-family:'Corbel';
+    color:lightblue;
+    text-shadow: 2px 2px 2px #CCCCCC; 
+    font-size: xx-large; 
+    text-align: center;
+}
+.table-text{
+    font-family: 'Courier New';
+}
+footer{
+    height:60px;
+    margin-top:25px;
+    margin-bottom:10px; 
+    text-align: center; 
+    font-family: 'Corbel'; 
+    font-size: 20px; 
+    color: grey;
+}
+.heading{
+    font-family:'Corbel'; 
+    color:lightgreen; 
+    text-shadow: 2px 2px 2px #CCCCCC;
+}
+.para{
+    font-family:'Corbel'; 
+    color:grey; 
+    font-size: 25px; 
+    margin-left:100px;
+    margin-right:100px;
+}

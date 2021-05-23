@@ -13,11 +13,11 @@
 
 ## Requirements:
 
-1. python-3.8.6
-2. Flask==1.1.2
-3. opencv-python==4.5.1.48
-4. Jinja2==2.11.3
+1. python - 3.8.6
+2. Flask - 1.1.2
+3. opencv-python - 4.5.1.48
+4. Jinja2 - 2.11.3
 
 
 ## Results :
-The result is amazing. The ball is successfully detected. Also if the ball looses the frame, we catch it later when it comes in the frame.
+The ball is successfully detected and tracked in the video frame.
